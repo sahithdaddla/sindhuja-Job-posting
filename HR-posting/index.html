@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Job Posting Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(255, 255, 255, 0.05) 2px,
+                rgba(255, 255, 255, 0.05) 4px
+            );
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .form-container {
+            padding: 40px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #6366f1;
+            font-size: 1.1rem;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .salary-range {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .salary-separator {
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 18px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-submit:active {
+            transform: translateY(-1px);
+        }
+
+        .btn-submit::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn-submit:hover::before {
+            left: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .header {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .salary-range {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .salary-separator {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-briefcase"></i> Job Posting Portal</h1>
+            <p>Create and manage job opportunities for your organization</p>
+        </div>
+
+        <div class="form-container">
+            <form id="jobForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i>Job Title</label>
+                        <input type="text" id="jobTitle" required placeholder="e.g., Senior Software Engineer">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-building"></i>Job Type</label>
+                        <select id="jobType" required>
+                            <option value="">Select Job Type</option>
+                            <option value="Full Time">Full Time</option>
+                            <option value="Part Time">Part Time</option>
+                            <option value="Contract">Contract</option>
+                            <option value="Internship">Internship</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label><i class="fas fa-file-alt"></i>Job Description</label>
+                        <textarea id="jobDescription" required placeholder="Describe the role, responsibilities, and what makes this opportunity exciting..."></textarea>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label><i class="fas fa-cogs"></i>Required Skills</label>
+                        <input type="text" id="requiredSkills" required placeholder="e.g., JavaScript, React, Node.js, MongoDB (comma separated)">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-map-marker-alt"></i>Location</label>
+                        <input type="text" id="location" required placeholder="e.g., New York, NY (Remote Available)">
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-alt"></i>Application Deadline</label>
+                        <input type="date" id="applicationDeadline" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label><i class="fas fa-clock"></i>Posted Date</label>
+                        <input type="date" id="postedDate" required>
+                    </div>
+
+                    <div class="form-group full-width">
+                        <label><i class="fas fa-dollar-sign"></i>Salary Range (Annual)</label>
+                        <div class="salary-range">
+                            <input type="number" id="salaryMin" placeholder="Min Salary" min="0" required>
+                            <span class="salary-separator">to</span>
+                            <input type="number" id="salaryMax" placeholder="Max Salary" min="0" required>
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-submit">
+                    <i class="fas fa-plus-circle"></i>
+                    Post Job Opening
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3000/api';
+
+        document.getElementById('jobForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const skillsInput = document.getElementById('requiredSkills').value;
+            const skills = skillsInput.split(',').map(skill => skill.trim()).filter(skill => skill);
+
+            // Validate form inputs
+            if (!skills.length) {
+                alert('Please provide at least one skill.');
+                return;
+            }
+
+            const salaryMin = parseInt(document.getElementById('salaryMin').value);
+            const salaryMax = parseInt(document.getElementById('salaryMax').value);
+            if (salaryMin < 0 || salaryMax < 0 || salaryMax < salaryMin) {
+                alert('Please provide a valid salary range.');
+                return;
+            }
+
+            const formData = {
+                title: document.getElementById('jobTitle').value.trim(),
+                type: document.getElementById('jobType').value,
+                description: document.getElementById('jobDescription').value.trim(),
+                skills: skills,
+                location: document.getElementById('location').value.trim(),
+                deadline: document.getElementById('applicationDeadline').value,
+                postedDate: document.getElementById('postedDate').value,
+                salaryMin: salaryMin,
+                salaryMax: salaryMax
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/jobs`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(formData),
+                });
+
+                if (response.ok) {
+                    // Reset form
+                    document.getElementById('jobForm').reset();
+
+                    // Show success animation
+                    const btn = document.querySelector('.btn-submit');
+                    const originalText = btn.innerHTML;
+                    btn.innerHTML = '<i class="fas fa-check"></i> Job Posted Successfully!';
+                    btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                    
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+                    }, 2000);
+
+                    // Reset default dates
+                    const today = new Date().toISOString().split('T')[0];
+                    document.getElementById('postedDate').value = today;
+                    document.getElementById('applicationDeadline').min = today;
+                } else {
+                    const errorData = await response.json();
+                    console.error('Error posting job:', errorData);
+                    alert(`Failed to post job: ${errorData.error || 'Unknown error'} - ${errorData.details || ''}`);
+                }
+            } catch (err) {
+                console.error('Error posting job:', err);
+                alert('An error occurred while posting the job. Please try again.');
+            }
+        });
+
+        // Initialize default dates
+        document.addEventListener('DOMContentLoaded', () => {
+            const postedDateInput = document.getElementById('postedDate');
+            const today = new Date().toISOString().split('T')[0];
+            postedDateInput.value = today;
+            postedDateInput.max = today;
+            document.getElementById('applicationDeadline').min = today;
+        });
+    </script>
+</body>
+</html>

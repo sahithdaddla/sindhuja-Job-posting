@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Career Opportunities Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(30, 60, 114, 0.9), rgba(42, 82, 152, 0.9)),
+                        radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3), transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 119, 198, 0.3), transparent 50%);
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 100" fill="white" opacity="0.1"><polygon points="0,100 1000,0 1000,100"/></svg>');
+            background-size: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .search-container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            padding: 10px;
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 15px 20px;
+            color: white;
+            font-size: 1.1rem;
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            border: none;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.1rem;
+        }
+
+        .search-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: -30px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .filters-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            animation: slideInFromLeft 0.8s ease-out;
+        }
+
+        @keyframes slideInFromLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            align-items: end;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-group select {
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .clear-filters {
+            background: linear-gradient(135deg, #64748b, #475569);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .clear-filters:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(100, 116, 139, 0.3);
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .job-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInScale 0.6s ease-out;
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .job-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+        }
+
+        .job-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .job-title-container {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .job-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1f2937;
+            margin-bottom: 8px;
+            line-height: 1.3;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .job-type-badge {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .job-type-full-time { background: #dbeafe; color: #1e40af; }
+        .job-type-part-time { background: #dcfce7; color: #166534; }
+        .job-type-contract { background: #fef3c7; color: #92400e; }
+        .job-type-internship { background: #fce7f3; color: #be185d; }
+
+        .job-organization {
+            color: #6b7280;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .job-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+            padding: 20px;
+            background: #f8fafc;
+            border-radius: 12px;
+        }
+
+        .job-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.9rem;
+            color: #64748b;
+        }
+
+        .job-meta-item i {
+            color: #6366f1;
+            width: 16px;
+        }
+
+        .job-description {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .skills-container {
+            margin-bottom: 25px;
+        }
+
+        .skills-title {
+            font-weight: 600;
+            color: #374151;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-tag {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            animation: skillPulse 2s infinite;
+        }
+
+        @keyframes skillPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .skill-tag:nth-child(odd) {
+            animation-delay: 0.5s;
+        }
+
+        .job-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-top: 20px;
+            margin-left: -10px;
+        }
+
+        .btn-apply {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-apply:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-description {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+            flex: 1;
+            justify-content: center;
+        }
+
+        .btn-description:hover {
+            background: linear-gradient(135deg, #5b21b6, #7c3aed);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-save {
+            background: rgba(99, 102, 241, 0.1);
+            color: #6366f1;
+            border: 2px solid #6366f1;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .btn-save:hover {
+            background: #6366f1;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .btn-save.saved {
+            background: #10b981;
+            color: white;
+            border-color: #10b981;
+        }
+
+        .btn-save i {
+            font-size: 1rem;
+        }
+
+        .no-jobs {
+            text-align: center;
+            padding: 60px 20px;
+            color: #6b7280;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .no-jobs i {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            color: #d1d5db;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0;
+        }
+
+        .pagination-btn {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pagination-btn:disabled {
+            background: #d1d5db;
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background: linear-gradient(135deg, #5b21b6, #7c3aed);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .pagination-info {
+            font-size: 1rem;
+            color: #4b5563;
+            font-weight: 500;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-content {
+            background: linear-gradient(145deg, #ffffff, #f1f5f9);
+            border-radius: 20px;
+            max-width: 700px;
+            width: 90%;
+            padding: 0;
+            position: relative;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.3s ease-out;
+            overflow: hidden;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            position: relative;
+        }
+
+        .modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="white" opacity="0.1"><circle cx="50" cy="50" r="40"/></svg>');
+            background-size: 50px;
+            opacity: 0.1;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.8rem;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .modal-close:hover {
+            color: #ff6b6b;
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 30px;
+            color: #4b5563;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            max-height: 60vh;
+            overflow-y: auto;
+            font-family: 'Georgia', serif;
+            background: #ffffff;
+            border-bottom-left-radius: 20px;
+            border-bottom-right-radius: 20px;
+        }
+
+        .modal-body::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-body::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 10px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #6366f1, #8b5cf6);
+            border-radius: 10px;
+        }
+
+        .modal-body::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #5b21b6, #7c3aed);
+        }
+
+        @media (max-width: 1200px) {
+            .jobs-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .jobs-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .job-card {
+                padding: 20px;
+            }
+            
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .main-content {
+                padding: 0 15px;
+            }
+            
+            .search-container {
+                flex-direction: column;
+                gap: 10px;
+                border-radius: 20px;
+            }
+            
+            .search-input {
+                text-align: center;
+            }
+
+            .job-actions {
+                flex-direction: column;
+                align-items: stretch;
+                margin-left: 0;
+            }
+
+            .btn-apply,
+            .btn-description {
+                flex: none;
+            }
+
+            .btn-save {
+                align-self: flex-end;
+            }
+
+            .job-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .job-type-badge {
+                margin-top: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <i class="fas fa-rocket" style="margin-right: 15px;"></i>
+                Find Your Dream Career
+            </h1>
+            <p class="hero-subtitle">Discover exciting opportunities and take the next step in your professional journey</p>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search jobs by title, skills, or location..." id="searchInput">
+                <button class="search-btn" onclick="searchJobs()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div class="filters-section">
+            <div class="filters-grid">
+                <div class="filter-group">
+                    <label><i class="fas fa-briefcase"></i> Job Type</label>
+                    <select id="jobTypeFilter">
+                        <option value="">All Types</option>
+                        <option value="Full Time">Full Time</option>
+                        <option value="Part Time">Part Time</option>
+                        <option value="Contract">Contract</option>
+                        <option value="Internship">Internship</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label><i class="fas fa-map-marker-alt"></i> Location</label>
+                    <select id="locationFilter">
+                        <option value="">All Locations</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <button class="clear-filters" onclick="clearFilters()">
+                        <i class="fas fa-times"></i> Clear Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="jobs-grid" id="jobsContainer">
+            <div class="no-jobs">
+                <i class="fas fa-search"></i>
+                <h3>No Job Listings Available</h3>
+                <p>Check back soon for new opportunities or adjust your search criteria.</p>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <button class="pagination-btn" onclick="previousPage()" id="prevButton">
+                <i class="fas fa-chevron-left"></i> Previous
+            </button>
+            <span class="pagination-info" id="paginationInfo"></span>
+            <button class="pagination-btn" onclick="nextPage()" id="nextButton">
+                Next <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+
+    <div class="modal" id="jobDescriptionModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalJobTitle"></h2>
+                <button class="modal-close" onclick="closeModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalJobDescription"></div>
+        </div>
+    </div>
+
+    <script>
+        let allJobs = [];
+        let filteredJobs = [];
+        let savedJobs = new Set();
+        let currentPage = 1;
+        const jobsPerPage = 6;
+        const API_URL = 'http://localhost:3000/api';
+
+        async function initializePage() {
+            await loadJobs();
+            renderJobs();
+            populateFilters();
+            setupEventListeners();
+            updatePagination();
+        }
+
+        async function loadJobs() {
+            try {
+                const response = await fetch(`${API_URL}/jobs`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                allJobs = await response.json();
+                filteredJobs = [...allJobs];
+            } catch (err) {
+                console.error('Error loading jobs:', err);
+                document.getElementById('jobsContainer').innerHTML = `
+                    <div class="no-jobs">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Error Loading Jobs</h3>
+                        <p>Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function calculateTimeAgo(postedDate) {
+            const now = new Date();
+            const posted = new Date(postedDate);
+            const diffInMs = now - posted;
+            const diffInDays = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+            
+            if (diffInDays < 1) return "Today";
+            if (diffInDays === 1) return "1 day ago";
+            if (diffInDays < 7) return `${diffInDays} days ago`;
+            const weeks = Math.floor(diffInDays / 7);
+            if (weeks === 1) return "1 week ago";
+            if (weeks < 4) return `${weeks} weeks ago`;
+            const months = Math.floor(diffInDays / 30);
+            if (months === 1) return "1 month ago";
+            return `${months} months ago`;
+        }
+
+        function renderJobs() {
+            const container = document.getElementById('jobsContainer');
+            const startIndex = (currentPage - 1) * jobsPerPage;
+            const endIndex = startIndex + jobsPerPage;
+            const paginatedJobs = filteredJobs.slice(startIndex, endIndex);
+            
+            if (filteredJobs.length === 0) {
+                container.innerHTML = `
+                    <div class="no-jobs">
+                        <i class="fas fa-search"></i>
+                        <h3>No Jobs Found</h3>
+                        <p>Try adjusting your search criteria or check back later for new opportunities.</p>
+                    </div>
+                `;
+                updatePagination();
+                return;
+            }
+
+            container.innerHTML = paginatedJobs.map(job => `
+                <div class="job-card" style="animation-delay: ${Math.random() * 0.5}s">
+                    <div class="job-header">
+                        <div class="job-title-container">
+                            <h3 class="job-title">${job.title}</h3>
+                            <div class="job-organization">
+                                <i class="fas fa-building"></i>
+                                Astrolite Tech Solutions
+                            </div>
+                        </div>
+                        <div class="job-type-badge job-type-${job.type.toLowerCase().replace(' ', '-')}">
+                            <i class="fas fa-${getJobTypeIcon(job.type)}"></i>
+                            ${job.type}
+                        </div>
+                    </div>
+                    
+                    <div class="job-meta">
+                        <div class="job-meta-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            ${job.location}
+                        </div>
+                        <div class="job-meta-item">
+                            <i class="fas fa-calendar"></i>
+                            Apply by ${new Date(job.deadline).toLocaleDateString()}
+                        </div>
+                        <div class="job-meta-item">
+                            <i class="fas fa-clock"></i>
+                            ${calculateTimeAgo(job.posted_date)}
+                        </div>
+                        <div class="job-meta-item">
+                            <i class="fas fa-dollar-sign"></i>
+                            $${job.salary_min} - $${job.salary_max}
+                        </div>
+                    </div>
+
+                    <p class="job-description">${job.description}</p>
+
+                    <div class="skills-container">
+                        <div class="skills-title">
+                            <i class="fas fa-cogs"></i>
+                            Required Skills
+                        </div>
+                        <div class="skills-grid">
+                            ${job.skills.map(skill => `<span class="skill-tag">${skill}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="job-actions">
+                        <button class="btn-apply">
+                            <i class="fas fa-paper-plane"></i>
+                            Apply Now
+                        </button>
+                        <button class="btn-description" onclick="showJobDescription(${job.id})">
+                            <i class="fas fa-file-alt"></i>
+                            Job Description
+                        </button>
+                        <button class="btn-save ${savedJobs.has(job.id) ? 'saved' : ''}" onclick="toggleSaveJob(${job.id})">
+                            <i class="fas fa-${savedJobs.has(job.id) ? 'heart' : 'heart'}"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            updatePagination();
+        }
+
+        function getJobTypeIcon(type) {
+            const icons = {
+                'Full Time': 'briefcase',
+                'Part Time': 'clock',
+                'Contract': 'handshake',
+                'Internship': 'graduation-cap'
+            };
+            return icons[type] || 'briefcase';
+        }
+
+        function populateFilters() {
+            const locationFilter = document.getElementById('locationFilter');
+            const locations = [...new Set(allJobs.map(job => job.location))];
+            
+            locationFilter.innerHTML = '<option value="">All Locations</option>' +
+                locations.map(location => `<option value="${location}">${location}</option>`).join('');
+        }
+
+        function setupEventListeners() {
+            document.getElementById('jobTypeFilter').addEventListener('change', applyFilters);
+            document.getElementById('locationFilter').addEventListener('change', applyFilters);
+            document.getElementById('searchInput').addEventListener('input', applyFilters);
+        }
+
+        async function applyFilters() {
+            const searchTerm = document.getElementById('searchInput').value;
+            const jobType = document.getElementById('jobTypeFilter').value;
+            const location = document.getElementById('locationFilter').value;
+
+            try {
+                const queryParams = new URLSearchParams();
+                if (searchTerm) queryParams.append('search', searchTerm);
+                if (jobType) queryParams.append('jobType', jobType);
+                if (location) queryParams.append('location', location);
+
+                const response = await fetch(`${API_URL}/jobs?${queryParams.toString()}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                filteredJobs = await response.json();
+                currentPage = 1;
+                renderJobs();
+            } catch (err) {
+                console.error('Error applying filters:', err);
+                document.getElementById('jobsContainer').innerHTML = `
+                    <div class="no-jobs">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Error Loading Jobs</h3>
+                        <p>Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        function clearFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('jobTypeFilter').value = '';
+            document.getElementById('locationFilter').value = '';
+            applyFilters();
+        }
+
+        function searchJobs() {
+            applyFilters();
+        }
+
+        function toggleSaveJob(jobId) {
+            if (savedJobs.has(jobId)) {
+                savedJobs.delete(jobId);
+            } else {
+                savedJobs.add(jobId);
+            }
+            renderJobs();
+        }
+
+        async function showJobDescription(jobId) {
+            try {
+                const response = await fetch(`${API_URL}/jobs/${jobId}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const job = await response.json();
+                document.getElementById('modalJobTitle').textContent = job.title;
+                document.getElementById('modalJobDescription').textContent = job.description;
+                document.getElementById('jobDescriptionModal').style.display = 'flex';
+            } catch (err) {
+                console.error('Error fetching job description:', err);
+                document.getElementById('modalJobTitle').textContent = 'Error';
+                document.getElementById('modalJobDescription').textContent = 'Failed to load job description. Please try again later.';
+                document.getElementById('jobDescriptionModal').style.display = 'flex';
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('jobDescriptionModal').style.display = 'none';
+        }
+
+        function updatePagination() {
+            const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+            const prevButton = document.getElementById('prevButton');
+            const nextButton = document.getElementById('nextButton');
+            const paginationInfo = document.getElementById('paginationInfo');
+
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === totalPages || totalPages === 0;
+            paginationInfo.textContent = filteredJobs.length > 0 
+                ? `Page ${currentPage} of ${totalPages}`
+                : 'No jobs available';
+        }
+
+        function previousPage() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderJobs();
+            }
+        }
+
+        function nextPage() {
+            const totalPages = Math.ceil(filteredJobs.length / jobsPerPage);
+            if (currentPage < totalPages) {
+                currentPage++;
+                renderJobs();
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', initializePage);
+    </script>
+</body>
+</html>
