@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  # -------------------------- PostgreSQL ---------------------------------
+  postgres:
+    image: postgres:16-alpine
+    container_name: job_postgres
+    ports:
+      - "5441:5432"                # host:container
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: job_portal
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks: [job_net]
+
+  # -------------------------- Node.js API --------------------------------
+  backend:
+    build: ./Backend               # uses Backend/Dockerfile
+    container_name: job_backend
+    ports:
+      - "3010:3010"
+    depends_on:
+      - postgres
+    environment:
+      PGUSER: postgres
+      PGPASSWORD: admin123
+      PGHOST: postgres
+      PGDATABASE: job_portal
+      PGPORT: 5432
+    networks: [job_net]
+
+  # -------------------------- Employee portal ----------------------------
+  employee-posting:
+    build: ./Employee-posting      # uses Employee-posting/Dockerfile
+    container_name: employee_posting_ui
+    ports:
+      - "8115:80"                  # host 8115 → nginx 80
+    depends_on:
+      - backend
+    networks: [job_net]
+
+  # -------------------------- HR portal ----------------------------------
+  hr-posting:
+    build: ./HR-posting            # uses HR-posting/Dockerfile
+    container_name: hr_posting_ui
+    ports:
+      - "8116:80"                  # host 8116 → nginx 80
+    depends_on:
+      - backend
+    networks: [job_net]
+
+volumes:
+  pgdata:
+
+networks:
+  job_net:
+
